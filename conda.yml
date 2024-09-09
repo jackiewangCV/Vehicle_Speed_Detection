@@ -1,0 +1,13 @@
+name: speed_py311
+
+dependencies:
+  - python==3.11
+  - pip
+
+  
+  - pip:
+    - torch
+    - utils
+    - imutils
+    - Pillow
+    - deep-sort-realtime
