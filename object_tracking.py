@@ -10,8 +10,6 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent / "yolov9"))
 from yolov9.models.common import DetectMultiBackend, AutoShape
 
-
-
 def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument(
@@ -55,8 +53,6 @@ def parse_args():
     opt = parser.parse_args()
     return opt
 
-
-
 def draw_corner_rect(img, bbox, line_length=30, line_thickness=5, rect_thickness=1,
                      rect_color=(255, 0, 255), line_color=(0, 255, 0)):
     x, y, w, h = bbox
@@ -86,10 +82,8 @@ def draw_corner_rect(img, bbox, line_length=30, line_thickness=5, rect_thickness
 def calculate_speed(distance, fps):
     return (distance *fps)*3.6
 
-
 def calculate_distance(p1, p2):
     return np.sqrt((p2[0] - p1[0])**2 + (p2[1] - p1[1])**2)
-
 
 def read_frames(cap):
     while True:
@@ -128,7 +122,6 @@ def get_clicked_points(frame, num_points=4):
 
     return clicked_points, img if len(clicked_points) == num_points else None
 
-
 def get_height_width_input(frame):
     img = frame.copy()
 
@@ -146,9 +139,6 @@ def get_height_width_input(frame):
 
     return height, width
 
-
-
-
 def main(_argv):
     FRAME_WIDTH=30
     FRAME_HEIGHT=100
@@ -158,7 +148,6 @@ def main(_argv):
 
     M = cv2.getPerspectiveTransform(SOURCE_POLYGONE, BIRD_EYE_VIEW)
 
-
     # Initialize the video capture
     video_input = opt.video
 
@@ -166,17 +155,13 @@ def main(_argv):
     if not cap.isOpened():
         print('Error: Unable to open video source.')
         return
-    
-  
+      
     frame_generator = read_frames(cap)
     frame_width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
     frame_height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
     fps = int(cap.get(cv2.CAP_PROP_FPS))
 
-
-    if opt.click:
-
-        
+    if opt.click:      
         frame = next(frame_generator)
         selected_points=[]
         selected_points, img = get_clicked_points(frame)
