@@ -9,6 +9,7 @@ import sys
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent / "yolov9"))
 from yolov9.models.common import DetectMultiBackend, AutoShape
+# from ultralytics import YOLO # Enable this dependency in case of using YoloV8 model by ultralytics
 
 def parse_args():
     parser = argparse.ArgumentParser()
@@ -192,6 +193,10 @@ def main(_argv):
     model = DetectMultiBackend(weights='weights/yolov9-e.pt',device=device, fuse=True)
     model = AutoShape(model)
 
+    # # the below lines can be enabled in case of using ultralytics  
+    # model = YOLO("yolov8n.yaml") # build a new model from scratch
+    # model = YOLO("yolov8n.pt") # load a pre-trained model
+
     # Load the COCO class labels
     classes_path = "configs/coco.names"
     with open(classes_path, "r") as f:
@@ -228,7 +233,23 @@ def main(_argv):
                     continue
                 
             if polygon_mask[(y1 + y2) // 2, (x1 + x2) // 2] == 255:
-                detect.append([[x1, y1, x2 - x1, y2 - y1], confidence, int(label)])            
+                detect.append([[x1, y1, x2 - x1, y2 - y1], confidence, int(label)])  
+        # # the below lines can be enabled in case of using ultralytics          
+        # for det in results:
+        #     for box in det.boxes:
+        #         label, confidence, bbox = int(box.cls[0].cpu().numpy()), box.conf[0].cpu().numpy(), box.xyxy[0].cpu().numpy().astype(int)
+        #         x1, y1, x2, y2 = map(int, bbox)
+        #         class_id = int(label)
+        #         # Filter out weak detections by confidence threshold and class_id
+        #         if opt.class_id is None:
+        #             if confidence < opt.conf:
+        #                 continue
+        #         else:
+        #             if class_id != opt.class_id or confidence < opt.conf:
+        #                 continue        
+        #         if polygon_mask[(y1 + y2) // 2, (x1 + x2) // 2] == 255:
+        #             detect.append([[x1, y1, x2 - x1, y2 - y1], confidence, int(label)])          
+
         tracks = tracker.update_tracks(detect, frame=frame)
         for track in tracks:
             if not track.is_confirmed():
