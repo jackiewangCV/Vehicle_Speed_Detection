@@ -33,9 +33,3 @@ This project estimates the speed of objects in a video using YOLOv9 for object d
   ```bash
    python object_tracking.py
   ```
-- To improve or customize model, please contact me. </br>
-  `Email:` jackiewang13571@gmail.com</br>
-  `Telegram:` [Click here](https://t.me/AIdevstar)</br>
-  `WhatsApp:` [Click here](https://wa.me/+15095539271)</br>
-  `Skype:` [Click here](https://join.skype.com/invite/epLIkMFiFRvQ)</br>
-  `Portfolio:` [Click here](https://jackiewang13571.wixsite.com/jackie-wang)</br>
